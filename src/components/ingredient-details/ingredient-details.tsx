@@ -7,11 +7,12 @@ import { useParams } from 'react-router-dom';
 export const IngredientDetails: FC = () => {
   /** TODO: взять переменную из стора DONE*/
   const { id } = useParams<{ id: string }>();
-  const ingredient = useSelector((state: RootState) => state.ingredients.data);
-  const ingredientData =
-    ingredient.find((ingredient) => ingredient._id === id) || null;
+  const { data, loading } = useSelector(
+    (state: RootState) => state.ingredients
+  );
+  const ingredientData = data.find((ingredient) => ingredient._id === id);
 
-  if (!ingredientData) {
+  if (loading || !ingredientData) {
     return <Preloader />;
   }
 

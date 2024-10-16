@@ -19,7 +19,7 @@ const rootReducer = {
   [orderDataSlice.name]: orderDataSlice.reducer,
   [constructorItemsSlice.name]: constructorItemsSlice.reducer,
   [profileOrdersSlice.name]: profileOrdersSlice.reducer
-}; 
+};
 
 const store = configureStore({
   reducer: rootReducer,
