@@ -9,7 +9,7 @@ import {
 } from '../utils/burger-api';
 import { setCookie } from '../utils/cookie';
 import { deleteCookie } from '../utils/cookie';
-import { TUser } from '@utils-types';
+import { TUser } from '../utils/types';
 
 interface TUserState {
   isAuthChecked: boolean;
@@ -18,7 +18,7 @@ interface TUserState {
   error?: string | null;
 }
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   isAuthChecked: false,
   user: null,
   loading: false,
@@ -137,4 +137,4 @@ export const userSlice = createSlice({
 });
 
 export const userActions = userSlice.actions;
-export default userSlice.reducer;
+export const userReducer = userSlice.reducer;

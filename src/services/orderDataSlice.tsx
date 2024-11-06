@@ -1,6 +1,6 @@
-import { getOrderByNumberApi } from '@api';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { TOrder } from '@utils-types';
+import { getOrderByNumberApi, getOrdersApi } from '../utils/burger-api';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TOrder } from '../utils/types';
 
 type TOrderDataState = {
   order: TOrder | null;
@@ -8,15 +8,18 @@ type TOrderDataState = {
   error?: string | null;
 };
 
-const initialState: TOrderDataState = {
+export const initialState: TOrderDataState = {
   order: null,
   loading: false,
   error: null
 };
 
-export const getOrderData = createAsyncThunk(
-  'orderData/getOrderData',
-  async (number: number) => await getOrderByNumberApi(number)
+export const getOrderData = createAsyncThunk<TOrder, number>(
+  'order/getOrder',
+  async (number: number) => {
+    const response = await getOrderByNumberApi(number);
+    return response.orders[0];
+  }
 );
 
 export const orderDataSlice = createSlice({
@@ -33,13 +36,16 @@ export const orderDataSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(getOrderData.fulfilled, (state, action) => {
-        state.loading = false;
-        state.order = action.payload.orders[0];
-      });
+      .addCase(
+        getOrderData.fulfilled,
+        (state, action: PayloadAction<TOrder>) => {
+          state.loading = false;
+          state.order = action.payload;
+        }
+      );
   }
 });
 
 export const orderActions = orderDataSlice.actions;
 
-export default orderDataSlice.reducer;
+export const orderReducer = orderDataSlice.reducer;
