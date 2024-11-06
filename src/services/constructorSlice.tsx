@@ -1,20 +1,20 @@
-import { orderBurgerApi } from '@api';
+import { orderBurgerApi } from '../utils/burger-api';
 import {
   createAsyncThunk,
   createSlice,
   nanoid,
   PayloadAction
 } from '@reduxjs/toolkit';
-import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
+import { TConstructorIngredient, TIngredient, TOrder } from '../utils/types';
 
-type TConstuctorState = {
+export type TConstuctorState = {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
   orderRequest: boolean;
   orderModalData: TOrder | null;
 };
 
-const initialState: TConstuctorState = {
+export const initialState: TConstuctorState = {
   bun: null,
   ingredients: [],
   orderRequest: false,
@@ -85,4 +85,4 @@ export const constructorItemsSlice = createSlice({
 });
 
 export const constructorActions = constructorItemsSlice.actions;
-export default constructorItemsSlice.reducer;
+export const constructorReducer = constructorItemsSlice.reducer;
