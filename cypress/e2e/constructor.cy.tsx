@@ -5,6 +5,7 @@ const main = '[data-cy=main]';
 const bunTop = '[data-cy=constructor-bun-top]';
 const bunBottom = '[data-cy=constructor-bun-bottom]';
 const modal = '[data-cy=modal]';
+const testUrl = 'http://localhost:4000'; 
 
 describe('Главная страница', () => {
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('Главная страница', () => {
     }).as('postOrder');
     cy.setCookie('accessToken', 'accessToken');
     window.localStorage.setItem('refreshToken', JSON.stringify('refreshToken'));
-    cy.visit('http://localhost:4000');
+    cy.visit(testUrl);
   });
 
   afterEach(function () {
@@ -59,7 +60,7 @@ describe('Главная страница', () => {
   });
 
   it('тест оформления заказа', () => {
-    cy.visit('http://localhost:4000');
+    cy.visit(testUrl);
     cy.wait('@getIngredients');
     cy.get(bun).contains('Добавить').click({ force: true });
     cy.get(main).contains('Добавить').click({ force: true });
